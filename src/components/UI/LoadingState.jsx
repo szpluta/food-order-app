@@ -1,79 +1,30 @@
 export default function LoadingState() {
   return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect x="1" y="1" rx="1" width="10" height="10">
-        <animate
-          id="spinner_FFyM"
-          begin="0;spinner_HDCY.end"
-          attributeName="x"
-          dur="0.2s"
-          values="1;13"
-          fill="freeze"
+    <div className="w-full flex justify-center p-5 aspect-4/1 items-center">
+      <svg
+        className="logo"
+        xmlns="http://www.w3.org/2000/svg"
+        width="110"
+        height="136"
+        viewBox="0 0 110 136"
+        fill="none"
+      >
+        <path
+          className="orange"
+          d="M56.7602 6.79973C60.6539 3.04434 66.9668 3.04434 70.8605 6.79973C74.7542 10.5551 74.7542 16.6438 70.8605 20.3992L21.1504 68.3438C17.2567 72.0992 10.9438 72.0992 7.05013 68.3438C3.15645 64.5884 3.15645 58.4998 7.05013 54.7444L56.7602 6.79973Z"
+          fill="#FEA42C"
         />
-        <animate
-          id="spinner_AIvE"
-          begin="spinner_1FwE.end"
-          attributeName="y"
-          dur="0.2s"
-          values="1;13"
-          fill="freeze"
+        <path
+          className="red"
+          d="M88.5076 19.5512C92.9575 15.2595 100.172 15.2596 104.622 19.5512C109.072 23.8431 109.072 30.8021 104.622 35.094L22.1578 114.63C17.7079 118.921 10.4926 118.921 6.04273 114.63C1.593 110.338 1.59299 103.379 6.04273 99.0874L88.5076 19.5512Z"
+          fill="#FE5A3C"
         />
-        <animate
-          id="spinner_wWCL"
-          begin="spinner_gH4o.end"
-          attributeName="x"
-          dur="0.2s"
-          values="13;1"
-          fill="freeze"
+        <path
+          className="green"
+          d="M52.9126 129.2C49.0189 132.956 42.706 132.956 38.8123 129.2C34.9186 125.445 34.9186 119.356 38.8123 115.601L88.5224 67.6563C92.4161 63.9009 98.729 63.9009 102.623 67.6563C106.516 71.4117 106.516 77.5004 102.623 81.2557L52.9126 129.2Z"
+          fill="#81BC35"
         />
-        <animate
-          id="spinner_S3Gg"
-          begin="spinner_Q0bx.end"
-          attributeName="y"
-          dur="0.2s"
-          values="13;1"
-          fill="freeze"
-        />
-      </rect>
-      <rect x="1" y="13" rx="1" width="10" height="10">
-        <animate
-          id="spinner_1FwE"
-          begin="spinner_FFyM.end"
-          attributeName="y"
-          dur="0.2s"
-          values="13;1"
-          fill="freeze"
-        />
-        <animate
-          id="spinner_gH4o"
-          begin="spinner_AIvE.end"
-          attributeName="x"
-          dur="0.2s"
-          values="1;13"
-          fill="freeze"
-        />
-        <animate
-          id="spinner_Q0bx"
-          begin="spinner_wWCL.end"
-          attributeName="y"
-          dur="0.2s"
-          values="1;13"
-          fill="freeze"
-        />
-        <animate
-          id="spinner_HDCY"
-          begin="spinner_S3Gg.end"
-          attributeName="x"
-          dur="0.2s"
-          values="13;1"
-          fill="freeze"
-        />
-      </rect>
-    </svg>
+      </svg>
+    </div>
   );
 }

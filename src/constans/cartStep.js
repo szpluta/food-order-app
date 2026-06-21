@@ -1,5 +1,5 @@
 export const CART_STEP = {
-  CART: "cart",
-  CHECKOUT: "checkout",
-  PAYWALL: "paywall",
+  CART: "CART",
+  CHECKOUT: "CHECKOUT",
+  PAYWALL: "PAYWALL",
 };
