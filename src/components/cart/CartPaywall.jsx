@@ -7,6 +7,7 @@ import RadioButton from "../UI/RadioButton";
 import { paymentMethods } from "../../constans/paymentMethods";
 import Button from "../UI/Button";
 import { BUTTON_VARIANT } from "../../constans/buttonVariant";
+import { currencyFormatter } from "../../utils/currency";
 
 export default function CartPaywall({
   customer,
@@ -72,7 +73,7 @@ export default function CartPaywall({
             <div className="font-bold text-[var(--text-h)] flex items-start gap-3.75 md:ms-auto text-center">
               Total Price:
               <span className="text-2xl text-[var(--accent)]">
-                {totalPrice}
+                {currencyFormatter.format(totalPrice)}
               </span>
             </div>
             <Button variant={BUTTON_VARIANT.BUTTON} type="submit">

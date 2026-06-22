@@ -4,6 +4,7 @@ export default function Button({
   children,
   variant = BUTTON_VARIANT.TAB,
   active,
+  customCSS,
   ...props
 }) {
   let classNames = "cursor-pointer leading-none";
@@ -21,7 +22,10 @@ export default function Button({
   };
 
   return (
-    <button className={`${classNames} ${variants[variant]}`} {...props}>
+    <button
+      className={`${classNames} ${variants[variant]} ${customCSS}`}
+      {...props}
+    >
       {children}
     </button>
   );

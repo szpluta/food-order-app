@@ -9,7 +9,7 @@ export default function MealsItem({ item, ...props }) {
   const { updateCart } = useContext(CartContext);
   return (
     <article
-      className="border border-(--border) p-2 pb-4 space-y-6 hover:shadow-[var(--shadow)] duration-300 ease-in-out text-center"
+      className="flex flex-col border border-(--border) p-2 pb-4 space-y-6 hover:shadow-[var(--shadow)] duration-300 ease-in-out text-center"
       {...props}
     >
       {item.image && (
@@ -30,6 +30,7 @@ export default function MealsItem({ item, ...props }) {
         onClick={() =>
           updateCart({ id: item.id, name: item.name, price: item.price })
         }
+        customCSS="mt-auto self-center"
       >
         Add to Cart
       </Button>
