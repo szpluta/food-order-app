@@ -12,7 +12,7 @@ export default function OrderItem({ order }) {
           </h3>
         </div>
 
-        <div className="w-4/12 p-5 span-y-5">
+        <div className="w-full md:w-4/12 text-center md:text-left p-5 span-y-5">
           <div>
             <div className="font-bold text-[var(--text-h)]">Contact:</div>
             <p>{order.fullName}</p>
@@ -25,7 +25,7 @@ export default function OrderItem({ order }) {
             <p>{paymentMethodLabels[order.paymentMethod]}</p>
           </div>
         </div>
-        <div className="w-8/12">
+        <div className="w-full md:w-8/12">
           <div className="flex gap-3.75 py-3.75 px-7 border-b border-b-(--border)">
             <div className="font-bold text-[var(--text-h)] w-6/12">Name</div>
             <div className="font-bold text-[var(--text-h)] text-center w-30">

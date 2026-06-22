@@ -30,11 +30,11 @@ export default function Meals() {
       {status === LOADER_STATE.SUCCESS && (
         <>
           {meals.length > 0 ? (
-            <ul className="grid grid-cols-4 gap-5 mb-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-5">
               {meals.map((meal) => (
                 <MealsItem item={meal} key={meal.id} />
               ))}
-            </ul>
+            </div>
           ) : (
             <div className="p-5">
               <h3 className="text-2xl font-bold text-center">- No meals -</h3>

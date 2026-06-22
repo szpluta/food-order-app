@@ -65,11 +65,11 @@ export default function CartPaywall({
             ))}
           </div>
 
-          <div className="flex gap-x-7 py-3.75 px-7 border-t border-t-(--border) justify-end">
+          <div className="flex flex-wrap gap-x-7 gap-y-3 py-3.75 px-7 border-t border-t-(--border) justify-center md:justify-end">
             <Button variant={BUTTON_VARIANT.BUTTON} onClick={prevStep}>
               Back to Checkout
             </Button>
-            <div className="font-bold text-[var(--text-h)] flex items-start gap-3.75 ms-auto">
+            <div className="font-bold text-[var(--text-h)] flex items-start gap-3.75 md:ms-auto text-center">
               Total Price:
               <span className="text-2xl text-[var(--accent)]">
                 {totalPrice}

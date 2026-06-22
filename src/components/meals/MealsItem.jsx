@@ -8,27 +8,31 @@ import { currencyFormatter } from "../../utils/currency";
 export default function MealsItem({ item, ...props }) {
   const { updateCart } = useContext(CartContext);
   return (
-    <li
-      className="border border-(--border) p-2 space-y-6 hover:shadow-[var(--shadow)] duration-300 ease-in-out"
+    <article
+      className="border border-(--border) p-2 pb-4 space-y-6 hover:shadow-[var(--shadow)] duration-300 ease-in-out text-center"
       {...props}
     >
-      {item.image && <img src={getImageUrl(item.image)} />}
+      {item.image && (
+        <img
+          src={getImageUrl(item.image)}
+          alt={item.name}
+          className="w-full aspect-4/2.5 object-cover"
+        />
+      )}
       <h3 className="font-bold text-xl mb-0">{item.name}</h3>
-      <h5 className="font-bold text-sm">
+      <p className="font-bold text-sm">
         {currencyFormatter.format(item.price)}
-      </h5>
+      </p>
       <p>{item.description}</p>
 
-      <div className="mb-2">
-        <Button
-          variant={BUTTON_VARIANT.BUTTON}
-          onClick={() =>
-            updateCart({ id: item.id, name: item.name, price: item.price })
-          }
-        >
-          Add to Cart
-        </Button>
-      </div>
-    </li>
+      <Button
+        variant={BUTTON_VARIANT.BUTTON}
+        onClick={() =>
+          updateCart({ id: item.id, name: item.name, price: item.price })
+        }
+      >
+        Add to Cart
+      </Button>
+    </article>
   );
 }

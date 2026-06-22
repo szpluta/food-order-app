@@ -60,7 +60,7 @@ export default function CartDialog({ cartDialog, openOrdersTab }) {
                 {shoppingCart.map((item) => (
                   <li className="flex gap-3.75" key={item.id}>
                     <div className="w-6/12">{item.name}</div>
-                    <div className="flex gap-3.75 justify-center w-30">
+                    <div className="flex gap-3.75 justify-center w-30 items-center">
                       <Button
                         variant={BUTTON_VARIANT.SMALL}
                         onClick={() => updateCart(item, -1)}
@@ -82,7 +82,7 @@ export default function CartDialog({ cartDialog, openOrdersTab }) {
                 ))}
               </ul>
 
-              <div className="flex gap-x-7 py-3.75 px-7 border-t border-t-(--border) justify-end">
+              <div className="flex flex-wrap gap-x-7 py-3.75 px-7 border-t border-t-(--border) justify-end">
                 <div className="font-bold text-[var(--text-h)] flex items-start gap-3.75">
                   Total Price:
                   <span className="text-2xl text-[var(--accent)]">

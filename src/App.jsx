@@ -8,6 +8,7 @@ import CartDialog from "./components/cart/CartDialog";
 import Header from "./components/Header";
 import Button from "./components/UI/Button";
 import { BUTTON_VARIANT } from "./constans/buttonVariant";
+import Footer from "./components/Footer";
 
 const VIEW = {
   MEALS: "MEALS",
@@ -34,14 +35,14 @@ function App() {
   }
 
   return (
-    <>
+    <div className="container">
       <Header />
       <CartContextProvider>
         <CartDialog openOrdersTab={handlerOpenOrdersTab} cartDialog={modal} />
 
-        <div className="flex gap-5 justify-center w-120 mx-auto border-b border-b-(--border) px-10 py-3 mb-10">
+        <nav className="flex flex-wrap gap-5 justify-center w-full max-w-120 mx-auto border-b border-b-(--border) px-10 py-3 mt-5 mb-10">
           <CartButton handleOpenCart={handleOpenModal} />
-          <div className="text-2xl font-bold">/</div>
+          <div className="hidden sm:block mx-4 h-6 w-0.75 bg-[var(--text-h)] -skew-x-14" />
           <Button
             disabled={view === VIEW.MEALS}
             active={view === VIEW.MEALS}
@@ -50,7 +51,7 @@ function App() {
           >
             MEALS
           </Button>
-          <div className="text-2xl font-bold">/</div>
+          <div className="hidden sm:block mx-4 h-6 w-0.75 bg-[var(--text-h)] -skew-x-14" />
           <Button
             disabled={view === VIEW.ORDERS}
             active={view === VIEW.ORDERS}
@@ -59,11 +60,12 @@ function App() {
           >
             ORDERS
           </Button>
-        </div>
+        </nav>
         {view === VIEW.MEALS && <Meals />}
         {view === VIEW.ORDERS && <Orders refreshKey={refreshKey} />}
       </CartContextProvider>
-    </>
+      <Footer />
+    </div>
   );
 }
 

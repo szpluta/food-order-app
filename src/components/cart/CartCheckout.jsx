@@ -44,7 +44,7 @@ export default function CartCheckout({
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-wrap items-center"
       >
-        <div className="w-8/12 p-7 columns-2 gap-x-12 gap-y-7">
+        <div className="w-full md:w-8/12 p-7 pb-3 md:pb-7 columns-1 md:columns-2 gap-x-12 gap-y-7">
           <FormInput
             label="First name"
             name="fullName"
@@ -112,7 +112,7 @@ export default function CartCheckout({
           />
         </div>
 
-        <div className="w-4/12 p-7 text-center text-sm text-[var(--text-h)]">
+        <div className="w-full md:w-4/12 p-7 pt-0  md:pt-7 text-center text-sm text-[var(--text-h)]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
@@ -130,11 +130,11 @@ export default function CartCheckout({
             of form is required but it’s ignored in further steps.
           </p>
         </div>
-        <div className="flex w-full gap-x-7 py-3.75 px-7 border-t border-t-(--border) justify-end">
+        <div className="flex flex-wrap w-full gap-x-7 gap-y-3 py-3.75 px-7 border-t border-t-(--border) justify-center md:justify-end">
           <Button variant={BUTTON_VARIANT.BUTTON} onClick={handleBackButton}>
             Back to Cart
           </Button>
-          <div className="font-bold text-[var(--text-h)] flex items-start gap-3.75 ms-auto">
+          <div className="font-bold text-[var(--text-h)] flex items-start gap-3.75 md:ms-auto text-center">
             Total Price:
             <span className="text-2xl text-[var(--accent)]">{totalPrice}</span>
           </div>
