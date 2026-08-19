@@ -1,4 +1,4 @@
-export default function LoadingState() {
+function LoadingState() {
   return (
     <div className="w-full flex justify-center p-5 aspect-4/1 items-center">
       <svg
@@ -28,3 +28,5 @@ export default function LoadingState() {
     </div>
   );
 }
+
+export default LoadingState;

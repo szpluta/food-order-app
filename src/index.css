@@ -113,3 +113,27 @@ input:-webkit-autofill {
     opacity: 1;
   }
 }
+
+.bl-orange {
+  animation: bleach 5s infinite;
+}
+
+.bl-red {
+  animation: bleach 5s infinite 0.25s;
+}
+
+.bl-green {
+  animation: bleach 5s infinite 0.5s;
+}
+
+@keyframes bleach {
+  0%,
+  20%,
+  100% {
+    opacity: 1;
+  }
+
+  10% {
+    opacity: 0.6;
+  }
+}

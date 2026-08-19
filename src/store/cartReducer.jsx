@@ -38,6 +38,12 @@ export function cartReducer(state, action) {
       }
     }
 
+    case "UPDATE_CHECKOUT_DATA":
+      return {
+        ...state,
+        checkoutData: action.payload,
+      };
+
     case "CLEAR":
       return {
         ...state,

@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { CartContext } from "../../store/CartContext";
 import { getImageUrl } from "../../utils/services/storageService";
 import Button from "../UI/Button";
-import { BUTTON_VARIANT } from "../../constans/buttonVariant";
+import { BUTTON_VARIANT } from "../../constans/stylesVariant";
 import { currencyFormatter } from "../../utils/currency";
 
-export default function MealsItem({ item, ...props }) {
+function MealsItem({ item, ...props }) {
   const { updateCart } = useContext(CartContext);
   return (
     <article
@@ -37,3 +37,5 @@ export default function MealsItem({ item, ...props }) {
     </article>
   );
 }
+
+export default MealsItem;

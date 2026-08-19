@@ -1,11 +1,20 @@
 import { useReducer } from "react";
 import { CartContext } from "./CartContext";
 import { cartReducer } from "./cartReducer";
+import { SHOPPING_CART_DATA } from "../constans/shoppingCart";
 
 export function CartContextProvider({ children }) {
   const [cartState, cartDispatch] = useReducer(cartReducer, {
     shoppingCart: [],
+    checkoutData: SHOPPING_CART_DATA,
   });
+
+  function handleCheckoutData(data) {
+    cartDispatch({
+      type: "UPDATE_CHECKOUT_DATA",
+      payload: data,
+    });
+  }
 
   function handleCartUpdate(item, quantityFactor = 1) {
     cartDispatch({
@@ -29,6 +38,8 @@ export function CartContextProvider({ children }) {
     updateCart: handleCartUpdate,
     totalPrice,
     clearCart: handleCartClear,
+    checkoutData: cartState.checkoutData,
+    updateCheckoutData: handleCheckoutData,
   };
 
   return <CartContext value={contextValue}>{children}</CartContext>;
