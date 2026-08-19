@@ -1,9 +1,6 @@
-export default function RadioButton({ payment, ...props }) {
+function RadioButton({ payment, ...props }) {
   return (
-    <label
-      className="cursor-pointer w-full sm:w-[calc(50%-12px)] lg:w-[calc(33%-7px)]"
-      key={payment.id}
-    >
+    <label className="cursor-pointer w-full sm:w-[calc(50%-12px)] lg:w-[calc(33%-7px)]">
       <input
         type="radio"
         className="hidden peer"
@@ -11,7 +8,7 @@ export default function RadioButton({ payment, ...props }) {
         value={payment.paymentMethod}
       />
       <div
-        className="h-full p-5 justify-center flex items-center gap-3.75 border border-(--border)
+        className="h-full p-5 justify-center flex items-center gap-3.75 border border-(--border) rounded-md
               peer-checked:border-[var(--accent)]"
       >
         <img className="h-8" src={payment.icon} />
@@ -21,3 +18,5 @@ export default function RadioButton({ payment, ...props }) {
     </label>
   );
 }
+
+export default RadioButton;

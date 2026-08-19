@@ -1,25 +1,17 @@
-import { BUTTON_VARIANT } from "../../constans/buttonVariant";
+import {
+  BUTTON_VARIANT,
+  BUTTON_VARIANT_STYLES,
+} from "../../constans/stylesVariant";
 
-export default function Button({
+function Button({
   children,
-  variant = BUTTON_VARIANT.TAB,
-  active,
-  customCSS,
+  variant = BUTTON_VARIANT.BUTTON,
+  customCSS = "",
   ...props
 }) {
   let classNames = "cursor-pointer leading-none";
 
-  if (active) {
-    classNames += ` text-[var(--accent)] cursor-default`;
-  }
-
-  const variants = {
-    TAB: "relative text-xl font-light",
-    SMALL: "text-[var(--accent)] text-sm font-bold p-1.5",
-    BUTTON:
-      "text-[var(--accent)] text-sm font-bold border border-[var(--accent)] py-1.5 px-5 rounded-3xl",
-    CLOSE: "absolute top-0 right-0 p-2 text-[var(--accent)] text-sm font-bold",
-  };
+  const variants = BUTTON_VARIANT_STYLES;
 
   return (
     <button
@@ -30,3 +22,5 @@ export default function Button({
     </button>
   );
 }
+
+export default Button;

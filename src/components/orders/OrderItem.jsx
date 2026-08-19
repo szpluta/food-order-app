@@ -1,7 +1,7 @@
 import { paymentMethodLabels } from "../../constans/paymentMethods";
 import { currencyFormatter } from "../../utils/currency";
 
-export default function OrderItem({ order }) {
+function OrderItem({ order }) {
   return (
     <>
       <div key={`order-${order.id}`} className="flex flex-wrap mb-10">
@@ -12,16 +12,16 @@ export default function OrderItem({ order }) {
           </h3>
         </div>
 
-        <div className="w-full md:w-4/12 text-center md:text-left p-5 span-y-5">
+        <div className="w-full md:w-4/12 text-center md:text-left p-5 space-y-5">
           <div>
-            <div className="font-bold text-[var(--text-h)]">Contact:</div>
-            <p>{order.fullName}</p>
-            <p>{order.city}</p>
+            <h3 className="font-bold text-[var(--text-h)]">Delivery:</h3>
+            <address>
+              <p>{order.fullName}</p>
+              <p>{order.city}</p>
+            </address>
           </div>
           <div>
-            <div className="font-bold text-[var(--text-h)]">
-              Payment method:
-            </div>
+            <h3 className="font-bold text-[var(--text-h)]">Payment method:</h3>
             <p>{paymentMethodLabels[order.paymentMethod]}</p>
           </div>
         </div>
@@ -69,3 +69,5 @@ export default function OrderItem({ order }) {
     </>
   );
 }
+
+export default OrderItem;

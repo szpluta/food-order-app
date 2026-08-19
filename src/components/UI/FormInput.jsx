@@ -1,4 +1,4 @@
-export default function FormInput({ name, label, error, ...props }) {
+function FormInput({ name, label, error, ...props }) {
   return (
     <div>
       <fieldset
@@ -17,3 +17,5 @@ export default function FormInput({ name, label, error, ...props }) {
     </div>
   );
 }
+
+export default FormInput;
