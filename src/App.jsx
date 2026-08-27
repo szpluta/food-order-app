@@ -10,6 +10,7 @@ import SummaryPage from "./pages/SummaryPage.jsx";
 import mealsLoader from "./pages/meals/mealsLoader.js";
 import ordersLoader from "./pages/orders/ordersLoader.js";
 import Changelog from "./pages/Changelog.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,8 +47,12 @@ const router = createBrowserRouter([
             loader: ordersLoader,
           },
           {
-            path: "/changelog",
+            path: "changelog",
             element: <Changelog />,
+          },
+          {
+            path: "login",
+            element: <LoginPage />,
           },
         ],
       },

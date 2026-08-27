@@ -30,13 +30,22 @@ export const BUTTON_VARIANT_STYLES = {
   transition-[background-size,color]
   duration-500
   ease-out
-
+  
   hover:bg-[length:120%_100%]
   hover:text-[var(--text-light)]
 
+  disabled:opacity-50
+  disabled:cursor-not-allowed
+  disabled:bg-none
+  disabled:hover:text-[var(--accent)]
 `,
 };
 
 export const LINK_VARIANT = {
   TILE: "TILE",
+};
+
+export const VARIANT_STYLES = {
+  DEFAULT: "",
+  TILE: "py-3 px-4 justify-center flex items-center gap-3.75 border border-(--border) rounded-md hover:border-[var(--accent)]",
 };

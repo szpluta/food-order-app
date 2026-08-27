@@ -1,13 +1,16 @@
 import { Outlet } from "react-router-dom";
 import { CartContextProvider } from "../store/CartContextProvider";
 import Footer from "../components/Footer";
+import { AuthContextProvider } from "../store/AuthContextProvider";
 
 function RootLayout() {
   return (
     <>
-      <CartContextProvider>
-        <Outlet />
-      </CartContextProvider>
+      <AuthContextProvider>
+        <CartContextProvider>
+          <Outlet />
+        </CartContextProvider>
+      </AuthContextProvider>
       <Footer />
     </>
   );

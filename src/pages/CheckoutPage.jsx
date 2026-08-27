@@ -125,7 +125,7 @@ function CheckoutPage() {
           </svg>
           <p>
             This is only a
-            <strong className="text-[var(--accent)]">demo app</strong>,
+            <strong className="text-[var(--accent)]"> demo app</strong>,
             therefore only Full name and City is Posted in Orders DB. The rest
             of form is required but it’s ignored in further steps.
           </p>
