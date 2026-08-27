@@ -7,6 +7,15 @@ function Changelog() {
       <h2 className="py-3.75 px-7 border-b border-b-(--border) mb-10">
         Changelog
       </h2>
+      <ChangelogItem version="1.2" codename="TORTILLA">
+        <ul className="list-disc ps-10">
+          <li>User authentication</li>
+          <li>Login and logout flow</li>
+          <li>Session handling and token refresh</li>
+          <li>Protected user orders</li>
+          <li>Order history</li>
+        </ul>
+      </ChangelogItem>
       <ChangelogItem version="1.1" codename="LASAGNA">
         <ul className="list-disc ps-10">
           <li>React Router implementation</li>

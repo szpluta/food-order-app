@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LINK_VARIANT } from "../../constans/stylesVariant";
+import { VARIANT_STYLES } from "../../constans/stylesVariant";
 import { useContext } from "react";
 import { CartContext } from "../../store/CartContext";
 
@@ -12,11 +12,6 @@ function MainNavigationItem({
   ...props
 }) {
   const { shoppingCart } = useContext(CartContext);
-  const variantStyles = {
-    [LINK_VARIANT.DEFAULT]: "",
-    [LINK_VARIANT.TILE]:
-      "py-3 px-4 justify-center flex items-center gap-3.75 border border-(--border) rounded-md hover:border-[var(--accent)]",
-  };
 
   const cartTotalItems = badge
     ? shoppingCart.reduce((total, item) => total + item.quantity, 0)
@@ -27,7 +22,7 @@ function MainNavigationItem({
       to={route}
       {...props}
       className={({ isActive }) =>
-        `p-2 ${variantStyles[variant] ?? ""} ${customClass} ${
+        `p-2 ${VARIANT_STYLES[variant] ?? ""} ${customClass} ${
           isActive ? "text-[var(--accent)]" : ""
         }`
       }

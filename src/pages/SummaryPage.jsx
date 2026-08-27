@@ -18,6 +18,7 @@ function SummaryPage() {
     try {
       const { error } = await supabase.functions.invoke("calc-order-total", {
         body: {
+          orderVersion: "v2",
           fullName: checkoutData.fullName,
           city: checkoutData.city,
           paymentMethod: checkoutData.paymentMethod,

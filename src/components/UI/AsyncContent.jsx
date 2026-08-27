@@ -6,7 +6,12 @@ import ErrorState from "./ErrorState";
 function AsyncContent({ resolve, children }) {
   return (
     <Suspense fallback={<LoadingState />}>
-      <Await resolve={resolve} errorElement={<ErrorState />}>
+      <Await
+        resolve={resolve}
+        errorElement={
+          <ErrorState message="Loading interupted, please try again later" />
+        }
+      >
         {children}
       </Await>
     </Suspense>
