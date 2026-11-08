@@ -7,6 +7,11 @@ function Changelog() {
       <h2 className="py-3.75 px-7 border-b border-b-(--border) mb-10">
         Changelog
       </h2>
+      <ChangelogItem version="1.4" codename="QUESADILLA">
+        <ul className="list-disc ps-10">
+          <li>Same ingredients, better UX structure</li>
+        </ul>
+      </ChangelogItem>
       <ChangelogItem version="1.3" codename="BURRITO">
         <ul className="list-disc ps-10">
           <li>User profile</li>

@@ -20,6 +20,12 @@ export function AuthReducer(state, action) {
         profile: action.payload.profile,
       };
     }
+    case "USER_PROFILE_LOADING": {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
     default:
       return state;
   }

@@ -12,12 +12,14 @@ import {
   updateDeliveryData,
 } from "../../utils/services/deliveryService";
 import DeliveryData from "../../components/DeliveryData";
+import { PROFILE_STATUS } from "../../constans/profileStatus";
 
 function ProfilePage() {
   const [formVisible, setFormVisible] = useState(false);
   const { deliveryData } = useLoaderData();
   const [deliveryDataList, setDeliveryDataList] = useState(deliveryData);
-  const { profile, updateUser } = useContext(AuthContext);
+  const { profile, isLoading, updateUser, reloadProfile } =
+    useContext(AuthContext);
 
   function handleDeliveryForm() {
     setFormVisible((visible) => !visible);
@@ -72,9 +74,32 @@ function ProfilePage() {
         <h3 className="text-2xl font-bold border-b border-b-(--border) mb-10 p-3.75">
           Profile
         </h3>
-        <div className="px-3.75">
-          <p>{profile?.name}</p>
-          <p>{profile?.surname}</p>
+        <div className="px-3.75 space-y-2">
+          {!isLoading ? (
+            profile?.status === PROFILE_STATUS.SUCCESS ? (
+              <>
+                <p>{profile?.name}</p> <p>{profile?.surname}</p>
+              </>
+            ) : (
+              <>
+                <p>
+                  We couldn't retrieve your profile information. Your account is
+                  still signed in.
+                </p>
+                <p>
+                  <Button
+                    variant={BUTTON_VARIANT.BUTTON}
+                    onClick={reloadProfile}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Loading..." : "Reload profile data"}
+                  </Button>
+                </p>
+              </>
+            )
+          ) : (
+            "Loading..."
+          )}
         </div>
       </div>
       <div className="w-full md:w-6/12 p-5 space-y-5">

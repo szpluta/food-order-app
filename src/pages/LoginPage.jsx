@@ -28,7 +28,7 @@ function LoginPage() {
   const login = async (data) => {
     try {
       await loginUser(data);
-      navigate("/meals");
+      navigate("/profile");
     } catch {
       setError("root", {
         type: "server",

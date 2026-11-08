@@ -15,35 +15,75 @@ import InfoStatement from "../components/UI/InfoStatement";
 import AsyncContent from "../components/UI/AsyncContent";
 import DeliveryData from "../components/DeliveryData";
 import { AuthContext } from "../store/AuthContext";
+import { DELIVERY_VIEW } from "../constans/deliveryState";
 
 function CheckoutPage() {
   const { profile } = useContext(AuthContext);
-  const navigate = useNavigate("");
+  const navigate = useNavigate();
   const { updateCheckoutData, totalPrice, checkoutData } =
     useContext(CartContext);
 
   const { deliveryData } = useLoaderData();
-  // const [deliveryDataList, setDeliveryDataList] = useState(deliveryData);
 
-  const [selectedAddress, setSelectedAddress] = useState(null);
-  const [deliveryAddressView, setDeliveryAddressView] = useState("select");
+  const [selectedAddressID, setSelectedAddressID] = useState(null);
+  const [deliveryAddressView, setDeliveryAddressView] = useState(
+    DELIVERY_VIEW.SELECT,
+  );
 
-  function handleDeliveryForm(view) {
+  const activeAddressID = selectedAddressID ?? profile?.defaultDeliveryId;
+
+  const currentDeliveryData =
+    deliveryAddressView === DELIVERY_VIEW.CHANGE
+      ? [...deliveryData].sort(
+          (a, b) =>
+            Number(b.id === activeAddressID) - Number(a.id === activeAddressID),
+        )
+      : deliveryData.filter((item) => activeAddressID === item.id);
+
+  function handleAddressView(view) {
     setDeliveryAddressView(view);
   }
 
   function handeSelectedDeliveryAddress(id) {
-    const selectedAddressData = deliveryData.find(
-      (address) => address.id === id,
-    );
-    updateCheckoutData({
-      ...checkoutData,
-      street: selectedAddressData.street,
-      phone: selectedAddressData.phone,
-      city: selectedAddressData.city,
-      postCode: selectedAddressData.postCode,
-    });
-    setSelectedAddress(selectedAddressData);
+    setSelectedAddressID(id);
+  }
+
+  function handleTabKeyDown(event) {
+    if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+      event.preventDefault();
+
+      const nextView =
+        deliveryAddressView === DELIVERY_VIEW.NEW
+          ? DELIVERY_VIEW.SELECT
+          : DELIVERY_VIEW.NEW;
+
+      handleAddressView(nextView);
+
+      document
+        .getElementById(
+          nextView === DELIVERY_VIEW.NEW
+            ? "new-address-tab"
+            : "select-address-tab",
+        )
+        ?.focus();
+    }
+
+    if (event.key === "Home" || event.key === "End") {
+      event.preventDefault();
+
+      const nextView =
+        event.key === "Home" ? DELIVERY_VIEW.SELECT : DELIVERY_VIEW.NEW;
+
+      handleAddressView(nextView);
+
+      document
+        .getElementById(
+          nextView === DELIVERY_VIEW.NEW
+            ? "new-address-tab"
+            : "select-address-tab",
+        )
+        ?.focus();
+    }
   }
 
   const {
@@ -63,31 +103,28 @@ function CheckoutPage() {
     },
   });
   const onSubmit = (data) => {
-    const selectedAddressData =
-      selectedAddress !== null
-        ? selectedAddress
-        : deliveryData.find(
-            (address) => address.id === profile?.defaultDeliveryId,
-          );
+    const selectedAddressData = deliveryData.find(
+      (address) => address.id === activeAddressID,
+    );
     updateCheckoutData({
       street:
-        data.street && deliveryAddressView === "new"
+        deliveryAddressView === DELIVERY_VIEW.NEW
           ? data.street
           : selectedAddressData.street,
       phone:
-        data.phone && deliveryAddressView === "new"
+        deliveryAddressView === DELIVERY_VIEW.NEW
           ? data.phone
           : selectedAddressData.phone,
       city:
-        data.city && deliveryAddressView === "new"
+        deliveryAddressView === DELIVERY_VIEW.NEW
           ? data.city
           : selectedAddressData.city,
       postCode:
-        data.postCode && deliveryAddressView === "new"
+        deliveryAddressView === DELIVERY_VIEW.NEW
           ? data.postCode
           : selectedAddressData.postCode,
-      createNew: deliveryAddressView === "new" ? true : false,
-      label: deliveryAddressView === "new" ? data.label : null,
+      createNew: deliveryAddressView === DELIVERY_VIEW.NEW ? true : false,
+      label: deliveryAddressView === DELIVERY_VIEW.NEW ? data.label : null,
       paymentMethod: data.paymentMethod,
     });
     navigate("/cart/summary");
@@ -101,32 +138,63 @@ function CheckoutPage() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-wrap items-top"
       >
-        <div className="w-full flex flex-wrap items-center gap-2 my-3 px-5">
-          <button
+        <div
+          className="w-full md:w-9/12 flex flex-wrap items-center justify-center my-3 px-5"
+          role="tablist"
+          aria-label="Delivery address options"
+        >
+          <Button
+            id="select-address-tab"
+            role="tab"
             type="button"
-            onClick={() => handleDeliveryForm("select")}
-            className={`inline-block mt-auto self-center cursor-pointer ${BUTTON_VARIANT_STYLES.BUTTON} ${deliveryAddressView === "select" ? BUTTON_VARIANT_STYLES.BUTTON_ACTIVE : ""}`}
+            aria-selected={deliveryAddressView !== DELIVERY_VIEW.NEW}
+            aria-controls="select-address-panel"
+            tabIndex={deliveryAddressView !== DELIVERY_VIEW.NEW ? 0 : -1}
+            onClick={() => handleAddressView(DELIVERY_VIEW.SELECT)}
+            onKeyDown={handleTabKeyDown}
+            className={`inline-block mt-auto self-center cursor-pointer ${BUTTON_VARIANT_STYLES.BUTTON} rounded-e-none ${deliveryAddressView !== DELIVERY_VIEW.NEW ? BUTTON_VARIANT_STYLES.BUTTON_ACTIVE : ""}`}
           >
             Select address
-          </button>
+          </Button>
 
-          <button
+          <Button
+            id="new-address-tab"
+            role="tab"
             type="button"
-            onClick={() => handleDeliveryForm("new")}
-            className={`inline-block mt-auto self-center cursor-pointer ${BUTTON_VARIANT_STYLES.BUTTON} ${deliveryAddressView === "new" ? BUTTON_VARIANT_STYLES.BUTTON_ACTIVE : ""}`}
+            aria-selected={deliveryAddressView === DELIVERY_VIEW.NEW}
+            aria-controls="new-address-panel"
+            tabIndex={deliveryAddressView === DELIVERY_VIEW.NEW ? 0 : -1}
+            onClick={() => handleAddressView(DELIVERY_VIEW.NEW)}
+            onKeyDown={handleTabKeyDown}
+            className={`inline-block mt-auto self-center cursor-pointer ${BUTTON_VARIANT_STYLES.BUTTON} rounded-s-none ${deliveryAddressView === DELIVERY_VIEW.NEW ? BUTTON_VARIANT_STYLES.BUTTON_ACTIVE : ""}`}
           >
             Add new address
-          </button>
+          </Button>
         </div>
-        {deliveryAddressView === "select" ? (
+        {deliveryAddressView !== DELIVERY_VIEW.NEW ? (
           <div className="w-full md:w-9/12 p-5">
+            <Button
+              type="button"
+              onClick={() =>
+                handleAddressView(
+                  deliveryAddressView === DELIVERY_VIEW.CHANGE
+                    ? DELIVERY_VIEW.SELECT
+                    : DELIVERY_VIEW.CHANGE,
+                )
+              }
+              className={`inline-block mt-auto self-center cursor-pointer ${BUTTON_VARIANT_STYLES.BUTTON} ${deliveryAddressView === DELIVERY_VIEW.NEW ? BUTTON_VARIANT_STYLES.BUTTON_ACTIVE : ""}`}
+            >
+              {deliveryAddressView === DELIVERY_VIEW.SELECT
+                ? "Choose different address"
+                : "Cancel"}
+            </Button>
             <AsyncContent resolve={deliveryData}>
               <DeliveryData
-                deliveryDataList={deliveryData}
+                deliveryDataList={currentDeliveryData}
                 profile={profile}
                 selectable
                 onSelect={handeSelectedDeliveryAddress}
-                selectedAddress={selectedAddress?.id}
+                selectedAddress={activeAddressID}
               />
             </AsyncContent>
           </div>
