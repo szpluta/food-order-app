@@ -6,20 +6,23 @@ import { supabase } from "../utils/supabase";
 import Button from "../components/UI/Button";
 import { currencyFormatter } from "../utils/currency";
 import { paymentMethodLabels } from "../constans/paymentMethods";
+import { AuthContext } from "../store/AuthContext";
+import { updateDeliveryData } from "../utils/services/deliveryService";
 
 function SummaryPage() {
   const [status, setStatus] = useState(LOADER_STATE.IDLE);
   const { checkoutData, shoppingCart, clearCart, totalPrice } =
     useContext(CartContext);
 
+  const { profile } = useContext(AuthContext);
+
   const onSubmit = async () => {
     setStatus(LOADER_STATE.LOADING);
-
     try {
       const { error } = await supabase.functions.invoke("calc-order-total", {
         body: {
           orderVersion: "v2",
-          fullName: checkoutData.fullName,
+          fullName: `${profile.name} ${profile.surname}`,
           city: checkoutData.city,
           paymentMethod: checkoutData.paymentMethod,
           items: shoppingCart.map((item) => ({
@@ -33,6 +36,22 @@ function SummaryPage() {
 
       if (error) throw error;
       clearCart();
+
+      if (checkoutData.createNew) {
+        await updateDeliveryData(
+          checkoutData.asDefault,
+          {
+            label: checkoutData.label,
+            street: checkoutData.street,
+            phone: checkoutData.phone,
+            city: checkoutData.city,
+            postCode: checkoutData.postCode,
+            deliveryDetails: checkoutData.deliveryDetails,
+          },
+          profile,
+        );
+      }
+
       setStatus(LOADER_STATE.SUCCESS);
     } catch (e) {
       console.error(e);
@@ -43,15 +62,17 @@ function SummaryPage() {
   return (
     <>
       <div className="py-3.75 px-7 border-b border-b-(--border) text-center mb-4">
-        <div className="font-bold text-[var(--text-h)]">Finalize Order</div>
+        <div className="font-bold text-(--text-h)">Finalize Order</div>
       </div>
       {status === LOADER_STATE.IDLE && (
         <div className="flex flex-wrap">
           <div className="w-full md:w-4/12 text-center md:text-left p-5 space-y-5">
             <div>
-              <h3 className="font-bold text-[var(--text-h)]">Delivery:</h3>
+              <h3 className="font-bold text-(--text-h)">Delivery:</h3>
               <address>
-                <p>{checkoutData.fullName}</p>
+                <p>
+                  {profile.name} {profile.surname}
+                </p>
                 <p>{checkoutData.street}</p>
                 <p>{checkoutData.email}</p>
                 <p>{checkoutData.phone}</p>
@@ -60,9 +81,7 @@ function SummaryPage() {
               </address>
             </div>
             <div>
-              <h3 className="font-bold text-[var(--text-h)]">
-                Payment method:
-              </h3>
+              <h3 className="font-bold text-(--text-h)">Payment method:</h3>
               <p>{paymentMethodLabels[checkoutData.paymentMethod]}</p>
             </div>
           </div>
@@ -70,13 +89,11 @@ function SummaryPage() {
           {shoppingCart.length > 0 ? (
             <div className="w-full md:w-8/12">
               <div className="flex gap-3.75 py-3.75 px-7 border-b border-b-(--border)">
-                <div className="font-bold text-[var(--text-h)] w-6/12">
-                  Name
-                </div>
-                <div className="font-bold text-[var(--text-h)] text-center w-30">
+                <div className="font-bold text-(--text-h) w-6/12">Name</div>
+                <div className="font-bold text-(--text-h) text-center w-30">
                   Quantity
                 </div>
-                <div className="font-bold text-[var(--text-h)] text-right w-30 ms-auto">
+                <div className="font-bold text-(--text-h) text-right w-30 ms-auto">
                   Price
                 </div>
               </div>
@@ -104,9 +121,9 @@ function SummaryPage() {
                   </li>
                 ))}
               </ul>
-              <div className="w-full font-bold text-[var(--text-h)] border-t border-t-(--border) flex items-start justify-end p-5 gap-3.75 mt-5">
+              <div className="w-full font-bold text-(--text-h) border-t border-t-(--border) flex items-start justify-end p-5 gap-3.75 mt-5">
                 Total Price:
-                <span className="text-2xl text-[var(--accent)]">
+                <span className="text-2xl text-(--accent)">
                   {currencyFormatter.format(totalPrice)}
                 </span>
               </div>

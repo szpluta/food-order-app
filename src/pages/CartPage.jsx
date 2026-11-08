@@ -13,11 +13,11 @@ function CartPage() {
       {shoppingCart.length > 0 && (
         <>
           <div className="flex gap-3.75 py-3.75 px-7 border-b border-b-(--border)">
-            <div className="font-bold text-[var(--text-h)] w-6/12">Name</div>
-            <div className="font-bold text-[var(--text-h)] text-center w-30">
+            <div className="font-bold text-(--text-h) w-6/12">Name</div>
+            <div className="font-bold text-(--text-h) text-center w-30">
               Quantity
             </div>
-            <div className="font-bold text-[var(--text-h)] text-right w-30 ms-auto">
+            <div className="font-bold text-(--text-h) text-right w-30 ms-auto">
               Price
             </div>
           </div>
@@ -48,9 +48,9 @@ function CartPage() {
           </ul>
 
           <div className="flex flex-wrap gap-x-7 py-3.75 px-7 border-t border-t-(--border) justify-end">
-            <div className="font-bold text-[var(--text-h)] flex items-start gap-3.75">
+            <div className="font-bold text-(--text-h) flex items-start gap-3.75">
               Total Price:
-              <span className="text-2xl text-[var(--accent)]">
+              <span className="text-2xl text-(--accent)">
                 {currencyFormatter.format(totalPrice)}
               </span>
             </div>
@@ -72,8 +72,8 @@ function CartPage() {
             />
           </svg>
           <h4 className="text-xl font-bold">
-            Your cart is <span className="text-[var(--accent)]">empty</span>.
-            Add some meals to get started.
+            Your cart is <span className="text-(--accent)">empty</span>. Add
+            some meals to get started.
           </h4>
           <p></p>
         </div>

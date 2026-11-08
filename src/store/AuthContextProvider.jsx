@@ -50,11 +50,21 @@ export function AuthContextProvider({ children }) {
     navigate("/");
   }
 
+  function handleUpdateUser(profile) {
+    authDispatch({
+      type: "USER_LOG_IN",
+      payload: {
+        profile,
+      },
+    });
+  }
+
   const authContextValue = {
     session: authState.session,
     profile: authState.profile,
     loginUser: handleLoginUser,
     logoutUser: handleLogoutUser,
+    updateUser: handleUpdateUser,
   };
 
   return <AuthContext value={authContextValue}>{children}</AuthContext>;

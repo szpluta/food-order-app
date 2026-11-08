@@ -39,7 +39,7 @@ function LoginPage() {
 
   return (
     <div className="container">
-      <h3 className="text-2xl font-bold text-center mb-5 text-[var(--accent)]">
+      <h3 className="text-2xl font-bold text-center mb-5 text-(--accent)">
         Login
       </h3>
       <p className="text-center mb-10">
