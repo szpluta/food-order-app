@@ -9,7 +9,7 @@ function RadioButton({ payment, ...props }) {
       />
       <div
         className="h-full p-5 justify-center flex items-center gap-3.75 border border-(--border) rounded-md
-              peer-checked:border-[var(--accent)]"
+              peer-checked:border-(--accent)"
       >
         <img className="h-8" src={payment.icon} />
 

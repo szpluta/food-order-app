@@ -23,7 +23,7 @@ function MainNavigationItem({
       {...props}
       className={({ isActive }) =>
         `p-2 ${VARIANT_STYLES[variant] ?? ""} ${customClass} ${
-          isActive ? "text-[var(--accent)]" : ""
+          isActive ? "text-(--accent)" : ""
         }`
       }
       aria-label={badge ? `${label}, ${cartTotalItems} items in cart` : label}
@@ -32,7 +32,7 @@ function MainNavigationItem({
       {badge ? (
         <span
           aria-hidden="true"
-          className="text-[10px] w-5 h-4 flex items-center justify-center absolute -bottom-0.5 right-0 bg-[var(--accent)] text-[var(--text-light)] rounded-lg  py-0 "
+          className="text-[10px] w-5 h-4 flex items-center justify-center absolute -bottom-0.5 right-0 bg-(--accent) text-[var(--text-light)] rounded-lg  py-0 "
         >
           {cartTotalItems}
         </span>

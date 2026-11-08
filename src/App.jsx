@@ -11,6 +11,8 @@ import mealsLoader from "./pages/meals/mealsLoader.js";
 import ordersLoader from "./pages/orders/ordersLoader.js";
 import Changelog from "./pages/Changelog.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import ProfilePage from "./pages/profile/ProfilePage.jsx";
+import { deliveryService } from "./utils/services/deliveryService.js";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,7 @@ const router = createBrowserRouter([
           {
             path: "cart/checkout",
             element: <CheckoutPage />,
+            loader: deliveryService,
           },
           {
             path: "cart/summary",
@@ -53,6 +56,11 @@ const router = createBrowserRouter([
           {
             path: "login",
             element: <LoginPage />,
+          },
+          {
+            path: "profile",
+            element: <ProfilePage />,
+            loader: deliveryService,
           },
         ],
       },

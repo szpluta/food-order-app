@@ -50,10 +50,10 @@ function MainNav({ items, variant }) {
         {session && !isLoading ? (
           <div ref={menuRef} className="relative">
             <button
-              className={`text-[var(--accent)] cursor-pointer `}
+              className={`text-(--accent) cursor-pointer `}
               onClick={handleMenuVisibility}
             >
-              Hello, {profile?.name} {profile?.surname}{" "}
+              Hello, {profile?.name} {profile?.surname}
               <img
                 className="ms-1"
                 width="10px"
@@ -62,12 +62,15 @@ function MainNav({ items, variant }) {
             </button>
             {userMenuVisible && (
               <div className="absolute left-0 top-[calc(100%+10px)] flex flex-col w-52 text-left text-sm bg-[var(--bg)] border border-[var(--border)] p-3 rounded-md z-3">
-                <NavLink className="hover:text-[var(--accent)]" to="/orders">
+                <NavLink className="hover:text-(--accent)" to="/orders">
                   My orders
+                </NavLink>
+                <NavLink className="hover:text-(--accent)" to="/profile">
+                  Profile
                 </NavLink>
                 <hr className="border-[var(--border)] mt-5 mb-2.5" />
                 <button
-                  className={`text-[var(--text)] hover:text-[var(--accent)] cursor-pointer text-left text-xs`}
+                  className={`text-[var(--text)] hover:text-(--accent) cursor-pointer text-left text-xs`}
                   onClick={logoutUser}
                 >
                   Logout

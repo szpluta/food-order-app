@@ -8,9 +8,9 @@ function Footer() {
         Szymon Pluta
       </p>
       <p className="text-xs mt-1">
-        v<span className="text-[var(--accent)]">1.2</span> - TORTILLA,{" "}
+        v<span className="text-(--accent)">1.3</span> - BURRITO,{" "}
         <Link
-          className="hover:text-[var(--accent)] transition-colors"
+          className="hover:text-(--accent) transition-colors"
           to="/changelog"
         >
           Changelog
