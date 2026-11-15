@@ -13,11 +13,13 @@ import {
 } from "../../utils/services/deliveryService";
 import DeliveryData from "../../components/DeliveryData";
 import { PROFILE_STATUS } from "../../constans/profileStatus";
+import { DELIVERY_VIEW } from "../../constans/deliveryState";
 
 function ProfilePage() {
   const [formVisible, setFormVisible] = useState(false);
   const { deliveryData } = useLoaderData();
-  const [deliveryDataList, setDeliveryDataList] = useState(deliveryData);
+  const [deliveryView, setDeliveryView] = useState(DELIVERY_VIEW.CURRENT);
+
   const { profile, isLoading, updateUser, reloadProfile } =
     useContext(AuthContext);
 
@@ -55,8 +57,6 @@ function ProfilePage() {
         defaultDeliveryId: response.id,
       });
     }
-
-    setDeliveryDataList((currrentList) => [response, ...currrentList]);
     reset();
   };
 
@@ -66,6 +66,14 @@ function ProfilePage() {
       ...profile,
       defaultDeliveryId: id,
     });
+  }
+
+  function handleDeliverySelection() {
+    setDeliveryView((currentView) =>
+      currentView === DELIVERY_VIEW.CURRENT
+        ? DELIVERY_VIEW.CHANGE
+        : DELIVERY_VIEW.CURRENT,
+    );
   }
 
   return (
@@ -130,11 +138,36 @@ function ProfilePage() {
           )}
         </div>
         <AsyncContent resolve={deliveryData}>
-          <DeliveryData
-            deliveryDataList={deliveryDataList}
-            profile={profile}
-            onSelect={selectDefaultDelivery}
-          />
+          {(resolvedDeliveryData) =>
+            resolvedDeliveryData.length > 0 ? (
+              <>
+                <DeliveryData
+                  deliveryDataList={
+                    deliveryView === DELIVERY_VIEW.CURRENT &&
+                    profile?.defaultDeliveryId != null
+                      ? resolvedDeliveryData.filter(
+                          (item) => profile?.defaultDeliveryId === item.id,
+                        )
+                      : resolvedDeliveryData
+                  }
+                  profile={profile}
+                  onSelect={selectDefaultDelivery}
+                />
+                {profile?.defaultDeliveryId != null && (
+                  <Button
+                    variant={BUTTON_VARIANT.SMALL}
+                    onClick={handleDeliverySelection}
+                  >
+                    {deliveryView === DELIVERY_VIEW.CURRENT
+                      ? "Show more"
+                      : "Show less"}
+                  </Button>
+                )}
+              </>
+            ) : (
+              "-- no data --"
+            )
+          }
         </AsyncContent>
       </div>
       <InfoStatement />

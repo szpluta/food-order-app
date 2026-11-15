@@ -38,6 +38,7 @@ const router = createBrowserRouter([
           {
             path: "cart/summary",
             element: <SummaryPage />,
+            loader: deliveryService,
           },
           {
             path: "meals",

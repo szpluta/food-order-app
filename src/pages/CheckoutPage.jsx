@@ -27,18 +27,20 @@ function CheckoutPage() {
 
   const [selectedAddressID, setSelectedAddressID] = useState(null);
   const [deliveryAddressView, setDeliveryAddressView] = useState(
-    DELIVERY_VIEW.SELECT,
+    DELIVERY_VIEW.CURRENT,
   );
 
   const activeAddressID = selectedAddressID ?? profile?.defaultDeliveryId;
 
-  const currentDeliveryData =
-    deliveryAddressView === DELIVERY_VIEW.CHANGE
-      ? [...deliveryData].sort(
+  function currentDeliveryData(resolvedDeliveryData) {
+    return deliveryAddressView === DELIVERY_VIEW.CURRENT &&
+      activeAddressID != null
+      ? resolvedDeliveryData.filter((item) => activeAddressID === item.id)
+      : [...resolvedDeliveryData].sort(
           (a, b) =>
             Number(b.id === activeAddressID) - Number(a.id === activeAddressID),
-        )
-      : deliveryData.filter((item) => activeAddressID === item.id);
+        );
+  }
 
   function handleAddressView(view) {
     setDeliveryAddressView(view);
@@ -46,6 +48,7 @@ function CheckoutPage() {
 
   function handeSelectedDeliveryAddress(id) {
     setSelectedAddressID(id);
+    setDeliveryAddressView(DELIVERY_VIEW.CURRENT);
   }
 
   function handleTabKeyDown(event) {
@@ -54,7 +57,7 @@ function CheckoutPage() {
 
       const nextView =
         deliveryAddressView === DELIVERY_VIEW.NEW
-          ? DELIVERY_VIEW.SELECT
+          ? DELIVERY_VIEW.CURRENT
           : DELIVERY_VIEW.NEW;
 
       handleAddressView(nextView);
@@ -72,7 +75,7 @@ function CheckoutPage() {
       event.preventDefault();
 
       const nextView =
-        event.key === "Home" ? DELIVERY_VIEW.SELECT : DELIVERY_VIEW.NEW;
+        event.key === "Home" ? DELIVERY_VIEW.CURRENT : DELIVERY_VIEW.NEW;
 
       handleAddressView(nextView);
 
@@ -150,7 +153,7 @@ function CheckoutPage() {
             aria-selected={deliveryAddressView !== DELIVERY_VIEW.NEW}
             aria-controls="select-address-panel"
             tabIndex={deliveryAddressView !== DELIVERY_VIEW.NEW ? 0 : -1}
-            onClick={() => handleAddressView(DELIVERY_VIEW.SELECT)}
+            onClick={() => handleAddressView(DELIVERY_VIEW.CURRENT)}
             onKeyDown={handleTabKeyDown}
             className={`inline-block mt-auto self-center cursor-pointer ${BUTTON_VARIANT_STYLES.BUTTON} rounded-e-none ${deliveryAddressView !== DELIVERY_VIEW.NEW ? BUTTON_VARIANT_STYLES.BUTTON_ACTIVE : ""}`}
           >
@@ -173,29 +176,37 @@ function CheckoutPage() {
         </div>
         {deliveryAddressView !== DELIVERY_VIEW.NEW ? (
           <div className="w-full md:w-9/12 p-5">
-            <Button
-              type="button"
-              onClick={() =>
-                handleAddressView(
-                  deliveryAddressView === DELIVERY_VIEW.CHANGE
-                    ? DELIVERY_VIEW.SELECT
-                    : DELIVERY_VIEW.CHANGE,
+            {activeAddressID != null && (
+              <Button
+                type="button"
+                onClick={() =>
+                  handleAddressView(
+                    deliveryAddressView === DELIVERY_VIEW.CHANGE
+                      ? DELIVERY_VIEW.CURRENT
+                      : DELIVERY_VIEW.CHANGE,
+                  )
+                }
+                className={`inline-block mt-auto mb-3 self-center cursor-pointer ${BUTTON_VARIANT_STYLES.BUTTON} ${deliveryAddressView === DELIVERY_VIEW.NEW ? BUTTON_VARIANT_STYLES.BUTTON_ACTIVE : ""}`}
+              >
+                {deliveryAddressView === DELIVERY_VIEW.CURRENT
+                  ? "Choose different address"
+                  : "Cancel"}
+              </Button>
+            )}
+            <AsyncContent resolve={deliveryData}>
+              {(resolvedDeliveryData) =>
+                resolvedDeliveryData.length > 0 ? (
+                  <DeliveryData
+                    deliveryDataList={currentDeliveryData(resolvedDeliveryData)}
+                    profile={profile}
+                    selectable
+                    onSelect={handeSelectedDeliveryAddress}
+                    selectedAddress={activeAddressID}
+                  />
+                ) : (
+                  "-- no data --"
                 )
               }
-              className={`inline-block mt-auto self-center cursor-pointer ${BUTTON_VARIANT_STYLES.BUTTON} ${deliveryAddressView === DELIVERY_VIEW.NEW ? BUTTON_VARIANT_STYLES.BUTTON_ACTIVE : ""}`}
-            >
-              {deliveryAddressView === DELIVERY_VIEW.SELECT
-                ? "Choose different address"
-                : "Cancel"}
-            </Button>
-            <AsyncContent resolve={deliveryData}>
-              <DeliveryData
-                deliveryDataList={currentDeliveryData}
-                profile={profile}
-                selectable
-                onSelect={handeSelectedDeliveryAddress}
-                selectedAddress={activeAddressID}
-              />
             </AsyncContent>
           </div>
         ) : (

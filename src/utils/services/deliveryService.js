@@ -47,11 +47,12 @@ export async function updateDefaultDeliveryAddress(id, profile) {
 }
 
 export async function deliveryService() {
-  const deliveryData = await getDeliveryData();
   const session = await checkSession();
 
   if (!session) {
     throw redirect("/login");
   }
+  const deliveryData = getDeliveryData();
+
   return { deliveryData };
 }

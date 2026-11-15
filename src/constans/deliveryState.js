@@ -1,5 +1,5 @@
 export const DELIVERY_VIEW = {
-  SELECT: "select",
+  CURRENT: "CURRENT",
   CHANGE: "change",
   NEW: "new",
 };
