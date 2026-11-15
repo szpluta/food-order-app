@@ -3,6 +3,7 @@ import MainNavigationItem from "./UI/MainNavItem";
 import { AuthContext } from "../store/AuthContext";
 import { NavLink } from "react-router-dom";
 import { VARIANT_STYLES } from "../constans/stylesVariant";
+import { PROFILE_STATUS } from "../constans/profileStatus";
 
 function MainNav({ items, variant }) {
   const { session, profile, isLoading, logoutUser } = useContext(AuthContext);
@@ -45,43 +46,49 @@ function MainNav({ items, variant }) {
           ))}
         </ul>
       </nav>
-
       <div className="w-auto ms-20">
-        {session && !isLoading ? (
-          <div ref={menuRef} className="relative">
-            <button
-              className={`text-(--accent) cursor-pointer `}
-              onClick={handleMenuVisibility}
-            >
-              Hello, {profile?.name} {profile?.surname}
-              <img
-                className="ms-1"
-                width="10px"
-                src="/icons/angle-down-solid.svg"
-              />
-            </button>
-            {userMenuVisible && (
-              <div className="absolute left-0 top-[calc(100%+10px)] flex flex-col w-52 text-left text-sm bg-[var(--bg)] border border-[var(--border)] p-3 rounded-md z-3">
-                <NavLink className="hover:text-(--accent)" to="/orders">
-                  My orders
-                </NavLink>
-                <NavLink className="hover:text-(--accent)" to="/profile">
-                  Profile
-                </NavLink>
-                <hr className="border-[var(--border)] mt-5 mb-2.5" />
-                <button
-                  className={`text-[var(--text)] hover:text-(--accent) cursor-pointer text-left text-xs`}
-                  onClick={logoutUser}
-                >
-                  Logout
-                </button>
-              </div>
-            )}
-          </div>
+        {!isLoading ? (
+          session ? (
+            <div ref={menuRef} className="relative">
+              <button
+                className={`text-(--accent) cursor-pointer `}
+                onClick={handleMenuVisibility}
+              >
+                Hello,
+                {profile?.status === PROFILE_STATUS.SUCCESS
+                  ? ` ${profile?.name} ${profile?.surname}`
+                  : " Proffesor"}
+                <img
+                  className="ms-1"
+                  width="10px"
+                  src="/icons/angle-down-solid.svg"
+                />
+              </button>
+              {userMenuVisible && (
+                <div className="absolute left-0 top-[calc(100%+10px)] flex flex-col w-52 text-left text-sm bg-[var(--bg)] border border-[var(--border)] p-3 rounded-md z-3">
+                  <NavLink className="hover:text-(--accent)" to="/orders">
+                    My orders
+                  </NavLink>
+                  <NavLink className="hover:text-(--accent)" to="/profile">
+                    Profile
+                  </NavLink>
+                  <hr className="border-[var(--border)] mt-5 mb-2.5" />
+                  <button
+                    className={`text-[var(--text)] hover:text-(--accent) cursor-pointer text-left text-xs`}
+                    onClick={logoutUser}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <NavLink className={VARIANT_STYLES[variant]} to="/login">
+              Login
+            </NavLink>
+          )
         ) : (
-          <NavLink className={VARIANT_STYLES[variant]} to="/login">
-            Login
-          </NavLink>
+          "Loading..."
         )}
       </div>
     </div>

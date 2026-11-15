@@ -8,6 +8,7 @@ import { currencyFormatter } from "../utils/currency";
 import { paymentMethodLabels } from "../constans/paymentMethods";
 import { AuthContext } from "../store/AuthContext";
 import { updateDeliveryData } from "../utils/services/deliveryService";
+import { BUTTON_VARIANT } from "../constans/stylesVariant";
 
 function SummaryPage() {
   const [status, setStatus] = useState(LOADER_STATE.IDLE);
@@ -136,7 +137,9 @@ function SummaryPage() {
             </div>
           )}
           <div className="w-full text-center">
-            <Button onClick={onSubmit}>Place the Order</Button>
+            <Button onClick={onSubmit} variant={BUTTON_VARIANT.BUTTON}>
+              Place the Order
+            </Button>
           </div>
         </div>
       )}

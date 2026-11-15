@@ -1,14 +1,6 @@
-import {
-  BUTTON_VARIANT,
-  BUTTON_VARIANT_STYLES,
-} from "../../constans/stylesVariant";
+import { BUTTON_VARIANT_STYLES } from "../../constans/stylesVariant";
 
-function Button({
-  children,
-  variant = BUTTON_VARIANT.BUTTON,
-  customCSS = "",
-  ...props
-}) {
+function Button({ children, variant, customCSS = "", ...props }) {
   let classNames = "cursor-pointer leading-none";
 
   const variants = BUTTON_VARIANT_STYLES;
